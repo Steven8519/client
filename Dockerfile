@@ -1,30 +1,19 @@
-FROM node:12
+FROM node:12 as build-deps
 
-# set working directory
-WORKDIR /app/
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/
 
-# Install nginx
-RUN apt-get update
-RUN apt-get install nginx -y
-COPY nginx.conf /etc/nginx/sites-available/default
-RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
+RUN npm install --silent
 
+COPY src /usr/src/app/src
+COPY public /usr/src/app/public
 
-# install and cache app dependencies
-COPY ./ /app/
-RUN yarn install
-RUN ls
-RUN yarn 
-RUN yarn build
-RUN cp -R build/* /var/www/html/
+#RUN npm install react-scripts -g --silent
+RUN npm run build
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
-
+FROM nginx:alpine
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 EXPOSE 80
-# start app
-CMD ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]

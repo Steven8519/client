@@ -50,16 +50,15 @@ spec:
         protocol: HTTP
       hosts:
         - "devhubsocial.com"
-        - "www.devhubsocial.com"
+        - "dev.devhubsocial.com"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: devhubapp
-  namespace: default
 spec:
   hosts:
-    - "www.devhubsocial.com"
+    - "devhubsocial.com"
   gateways:
     - developer-gateway
   http:
@@ -76,7 +75,6 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: developer-social
-  namespace: default
 spec:
   hosts:
     - "*"

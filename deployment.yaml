@@ -39,7 +39,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: developer-gateway
+  name: devhub-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -59,13 +59,43 @@ spec:
   hosts:
     - "*"
   gateways:
-    - developer-gateway
+    - devhub-gateway
   http:
-    - match:
-        - uri:
-            exact: /
-      route:
+    - route:
         - destination:
             host: devhubsocial-app
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: grafana-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 15031
+        name: http-grafana
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grafana-vs
+  namespace: istio-system
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - grafana-gateway
+  http:
+    - match:
+        - port: 15031
+      route:
+        - destination:
+            host: grafana
             port:
               number: 3000

@@ -39,7 +39,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: devhubsocial-gateway
+  name: developer-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -49,22 +49,21 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "devhubsocial.com"
-        - "devhubsocial.com"
+        - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: devhubsocial
+  name: devhubsocial-app
 spec:
   hosts:
-    - "devhubsocial.com"
+    - "*"
   gateways:
-    - devhub-gateway
+    - developer-gateway
   http:
     - match:
         - uri:
-            prefix: "/"
+            exact: /
       route:
         - destination:
             host: devhubsocial-app

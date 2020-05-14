@@ -16,6 +16,9 @@ kind: Deployment
 metadata:
   name: devhubsocial-app-v1
 spec:
+  selector:
+    matchLabels:
+      app: developer-social
   replicas: 1
   template:
     metadata:

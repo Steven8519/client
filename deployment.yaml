@@ -14,7 +14,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devhubsocial-app-v1
+  name: devhubsocial-app
 spec:
   selector:
     matchLabels:

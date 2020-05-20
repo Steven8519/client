@@ -77,13 +77,13 @@ metadata:
   name: developer-social
 spec:
   hosts:
-    - "devhubsocial.com"
+    - "*"
   gateways:
     - developer-gateway
   http:
     - match:
         - uri:
-            prefix: /
+            prefix: "/developers"
       route:
         - destination:
             port:

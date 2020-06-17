@@ -20,9 +20,9 @@ label{
   .btn {
     font-weight: 700;
     height: 36px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
+    -moz-developer-select: none;
+    -webkit-developer-select: none;
+    developer-select: none;
     cursor: default;
   }
   

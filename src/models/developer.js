@@ -1,5 +1,5 @@
-export class Developer {
-    constructor(firstName, lastName, typeOfDeveloper, username, password, id) {
+export default class Developer {
+    constructor(username, password, firstName, lastName, typeOfDeveloper, id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

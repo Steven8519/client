@@ -2,16 +2,16 @@ import React from 'react';
 import DeveloperService from '../../services/developer.service';
 import Developer from '../../models/developer';
 
-export default class HomePage extends React.Component{
+export default class HomePage extends React.Component {
+
     constructor(props) {
         super(props);
-
-
         this.state = {
+            courses: [],
             errorMessage: '',
             infoMessage: '',
-            currentDeveloper: new Developer()
-        }
+            currentUser: new Developer()
+        };
     }
 
     componentDidMount() {
@@ -19,7 +19,16 @@ export default class HomePage extends React.Component{
             this.setState({
                 currentDeveloper: data
             });
-        })
+        });
     }
-    
+
+    render() {
+        const {courses, infoMessage, errorMessage} = this.state;
+        return (
+           <div>
+
+           </div>
+        );
+    }
+
 }

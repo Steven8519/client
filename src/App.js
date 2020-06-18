@@ -71,7 +71,7 @@ export default class App extends React.Component {
           }
           {!this.state.currentUser &&
             <nav className="navbar navbar-expand navbar-dark bg-dark">
-              <a className="navbar-brand" href="https/reactjs.org">
+              <a className="navbar-brand" href="/">
                 DevHub Social
               </a>
               <div className="navbar-nav mr-auto">

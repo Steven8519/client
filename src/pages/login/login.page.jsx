@@ -1,6 +1,6 @@
 import React from 'react';
-import DeveloperService from '../../services/developer.service';
-import Developer from '../../models/developer';
+import UserService from '../../services/user.service';
+import {User} from '../../models/user';
 import './login.page.css';
 
 export default class LoginPage extends React.Component{
@@ -8,12 +8,12 @@ export default class LoginPage extends React.Component{
   constructor(props) {
     super(props);
 
-    if(DeveloperService.currentDeveloperValue) {
+    if(UserService.currentUserValue) {
       this.props.history.push('/');
     }
 
     this.state = {
-      Developer: new Developer('',''),
+      user: new User('',''),
       submitted: false,
       loading: false,
       errorMessage: ''
@@ -21,24 +21,24 @@ export default class LoginPage extends React.Component{
   }
 
   handleChange(e) {
-    var {lastName, value} = e.target;
-    var developer = this.state.developer;
-    developer[lastName] = value;
-    this.setState({developer: developer});
+    var {name, value} = e.target;
+    var user = this.state.user;
+    user[name] = value;
+    this.setState({user: user});
   }
 
   handleLogin(e) {
     e.preventDefault();
 
     this.setState({submitted: true});
-    const {developer} = this.state;
+    const {user} = this.state;
 
-    if(!(developer.username && developer.password)){
+    if(!(user.username && user.password)){
       return;
     }
 
     this.setState({loading: true});
-    DeveloperService.login(developer).then(data => {
+    UserService.login(user).then(data => {
       this.props.history.push("/home");
     }, error => {
       this.setState({
@@ -49,7 +49,7 @@ export default class LoginPage extends React.Component{
   }
 
   render() {
-    const {developer, submitted, loading, errorMessage} = this.state;
+    const {user, submitted, loading, errorMessage} = this.state;
     return (
       <div className="col-md-12">
         <div className="card card-container">
@@ -60,17 +60,17 @@ export default class LoginPage extends React.Component{
             </div>
           }
           <form name="form" onSubmit={(e) => this.handleLogin(e)}>
-            <div className={'form-group' + (submitted && !developer.username ? 'has-error':'')}>
+            <div className={'form-group' + (submitted && !user.username ? 'has-error':'')}>
               <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" name="username" value={developer.username} onChange={(e)=>this.handleChange(e)}/>
-              {submitted && !developer.username &&
+              <input type="text" className="form-control" name="username" value={user.username} onChange={(e)=>this.handleChange(e)}/>
+              {submitted && !user.username &&
                 <div className="help-block">Username is required</div>
               }
             </div>
-            <div className={'form-group' + (submitted && !developer.password ? 'has-error':'')}>
+            <div className={'form-group' + (submitted && !user.password ? 'has-error':'')}>
               <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" name="password" value={developer.password} onChange={(e)=>this.handleChange(e)}/>
-              {submitted && !developer.password &&
+              <input type="password" className="form-control" name="password" value={user.password} onChange={(e)=>this.handleChange(e)}/>
+              {submitted && !user.password &&
                 <div className="help-block">Password is required</div>
               }
             </div>

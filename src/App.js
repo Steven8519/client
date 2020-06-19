@@ -50,7 +50,7 @@ export default class App extends React.Component {
       <Router history={history}>
         <div>
           {this.state.currentUser &&
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
+            <nav className="nav nav-masthead justify-content-center">
               <a className="navbar-brand" href="https/reactjs.org">
                 DevHub Social
               </a>

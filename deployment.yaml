@@ -27,7 +27,7 @@ spec:
         version: v1
     spec:
       containers:
-        - name: devhub-app
+        - name: devhubsocial-app
           image: steven8519/client
           resources:
             requests:

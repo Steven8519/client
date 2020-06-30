@@ -34,3 +34,5 @@ spec:
             requests:
               cpu: "100m"
           imagePullPolicy: Always
+          ports:
+            - containerPort: 80

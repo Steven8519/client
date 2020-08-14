@@ -87,5 +87,5 @@ spec:
       route:
         - destination:
             port:
-              number: 8000
+              number: 8001
             host: developer-social

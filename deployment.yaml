@@ -49,7 +49,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "devhubsocial.com"
+        - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -57,7 +57,7 @@ metadata:
   name: devhubapp
 spec:
   hosts:
-    - "devhubsocial.com"
+    - "*"
   gateways:
     - developer-gateway
   http:
@@ -82,9 +82,9 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /
+            prefix: /api
       route:
         - destination:
             port:
-              number: 8001
+              number: 8080
             host: developer-social

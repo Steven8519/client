@@ -50,7 +50,6 @@ spec:
         protocol: HTTP
       hosts:
         - "devhubsocial.com"
-        - "dev.devhubsocial.com"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -64,7 +63,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/"
+            prefix: /
       route:
         - destination:
             host: developer-social
@@ -83,7 +82,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/api/1.0/users"
+            prefix: /
       route:
         - destination:
             port:

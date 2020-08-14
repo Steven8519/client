@@ -1,3 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: developer-social
+  labels:
+    app: developer-social
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: developer-social
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developer-social
+spec:
+  selector:
+    matchLabels:
+      app: developer-social
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: developer-social
+        version: v1
+    spec:
+      containers:
+        - name: devhub-app
+          image: steven8519/client
+          resources:
+            requests:
+              cpu: "100m"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -29,7 +67,7 @@ spec:
             prefix: "/"
       route:
         - destination:
-            host: devhubsocial-app
+            host: developer-social
             port:
               number: 80
 ---

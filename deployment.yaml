@@ -45,9 +45,9 @@ spec:
   http:
     - match:
         - uri:
-            prefix: "/developers"
+            prefix: "/api/1.0/users"
       route:
         - destination:
             port:
-              number: 8001
+              number: 8080
             host: developer-social

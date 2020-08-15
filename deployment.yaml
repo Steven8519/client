@@ -1,37 +1,36 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: developer-social
-  labels:
-    app: developer-social
-spec:
-  ports:
-    - name: http
-      port: 8001
-  selector:
-    app: developer-social
----
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: developer-social
 spec:
+  selector:
+    matchLabels:
+      app: developer-social
   replicas: 1
-  template:
+  template: # template for the pods
     metadata:
       labels:
         app: developer-social
-        version: v1
     spec:
       containers:
-        - name: social-app
-          image: Steven8519/client
-          imagePullPolicy: IfNotPresent
+        - name: developer-social
+          image: steven8519/client
           env:
-            - name: MONGODB_HOST
-              value: mongodb
-          ports:
-            - containerPort: 8001
+            - name: SPRING_PROFILES_ACTIVE
+              value: production-microservice
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: developer-social
+spec:
+  selector:
+    app: developer-social
+  ports:
+    - name: http
+      port: 80
+  type: ClusterIP
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
